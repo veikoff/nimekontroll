@@ -47,31 +47,51 @@ function getPrice(tld: string): string {
   return prices[tld] ?? "";
 }
 
-async function checkDomainRDAP(domain: string, tld: string): Promise<"available" | "taken" | "error"> {
-  const rdapEndpoints: Record<string, string> = {
-    ".ee": `https://rdap.internet.ee/domain/${domain}`,
-    ".com": `https://rdap.verisign.com/com/v1/domain/${domain}`,
-    ".eu": `https://rdap.eu/domain/${domain}`,
-    ".io": `https://rdap.nic.io/domain/${domain}`,
-    ".co": `https://rdap.nic.co/domain/${domain}`,
-  };
-
-  const url = rdapEndpoints[tld];
-  if (!url) return "error";
-
+// Cloudflare DNS over HTTPS – töötab kõigi TLD-de jaoks
+// Status 0 = NOERROR (domeen olemas), 3 = NXDOMAIN (domeen vaba)
+async function checkDomainDoH(domain: string): Promise<"available" | "taken" | "error"> {
   try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: { Accept: "application/rdap+json" },
-      signal: AbortSignal.timeout(8000),
-    });
+    const res = await fetch(
+      `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=NS`,
+      {
+        headers: { Accept: "application/dns-json" },
+        signal: AbortSignal.timeout(8000),
+      }
+    );
+    if (!res.ok) return "error";
+    const data = await res.json();
+    // Status 0 = NOERROR (registreeritud), 3 = NXDOMAIN (vaba)
+    if (data.Status === 3) return "available";
+    if (data.Status === 0) return "taken";
+    return "error";
+  } catch {
+    return "error";
+  }
+}
 
+// .com kasutab RDAP-i (usaldusväärsem kui DNS)
+async function checkDomainRDAPCom(domain: string): Promise<"available" | "taken" | "error"> {
+  try {
+    const res = await fetch(
+      `https://rdap.verisign.com/com/v1/domain/${domain}`,
+      {
+        headers: { Accept: "application/rdap+json" },
+        signal: AbortSignal.timeout(8000),
+      }
+    );
     if (res.status === 200) return "taken";
     if (res.status === 404) return "available";
     return "error";
   } catch {
     return "error";
   }
+}
+
+async function checkDomain(domain: string, tld: string): Promise<"available" | "taken" | "error"> {
+  // .com-il on usaldusväärne RDAP server (Verisign)
+  if (tld === ".com") return checkDomainRDAPCom(domain);
+  // Kõik teised TLD-d (.ee, .eu, .io, .co) DoH kaudu
+  return checkDomainDoH(domain);
 }
 
 export async function GET(request: NextRequest) {
@@ -91,7 +111,7 @@ export async function GET(request: NextRequest) {
   const checks = await Promise.allSettled(
     tlds.map(async (tld): Promise<DomainCheck> => {
       const domain = `${slug}${tld}`;
-      const status = await checkDomainRDAP(domain, tld);
+      const status = await checkDomain(domain, tld);
       return {
         tld,
         domain,
