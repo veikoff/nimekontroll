@@ -92,6 +92,9 @@ export default function Home() {
               Namecheap
             </a>
           </p>
+          <p className="text-xs text-muted-foreground/70 mt-1">
+            Domeenihinnad Zone.ee ja Namecheap hinnakirja põhjal – muutused võimalikud.
+          </p>
         </div>
       </footer>
     </div>
