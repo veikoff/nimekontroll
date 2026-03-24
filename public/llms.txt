@@ -1,0 +1,22 @@
+# Nimekontroll.ee
+
+> Eesti ärinime kättesaadavuse kontrollija – kontrollib korraga äriregistrit, domeene ja sotsiaalmeediat.
+
+Nimekontroll.ee on tasuta tööriist, mis võimaldab OÜ asutajatel, FIE-del ja e-residentidel kontrollida ärinime kättesaadavust ühest kohast.
+
+## Funktsioonid
+
+- **Äriregister**: Kontrollib Eesti äriregistrit (ariregister.rik.ee) – kas täpne nimi on registreeritud
+- **Domeenid**: Kontrollib .ee, .com, .eu, .io domeenide kättesaadavust RDAP protokolli kaudu
+- **Sotsiaalmeedia**: Kontrollib Facebook, Instagram, LinkedIn kasutajanimede kättesaadavust
+- **Affiliate lingid**: Vabade domeenide kõrval otselingid Zone.ee ja Namecheap registreerimiseks
+
+## API
+
+- `GET /api/check/ariregister?name=NIMI` – Äriregistri kontroll
+- `GET /api/check/domains?name=NIMI` – Domeenide kontroll
+- `GET /api/check/social?name=NIMI` – Sotsiaalmeedia kontroll
+
+## Sihtrühm
+
+OÜ asutajad, FIE-d, e-residendid, startup asutajad Eestis ja väljastpoolt.
