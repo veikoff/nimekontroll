@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit } from "@/lib/ratelimit";
 
 export interface SocialCheck {
   platform: string;
@@ -44,6 +45,9 @@ async function checkUrl(url: string): Promise<"available" | "taken" | "error"> {
 }
 
 export async function GET(request: NextRequest) {
+  const rateLimitError = await checkRateLimit(request);
+  if (rateLimitError) return rateLimitError;
+
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
 

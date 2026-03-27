@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit } from "@/lib/ratelimit";
 
 export interface DomainCheck {
   tld: string;
@@ -99,6 +100,9 @@ async function checkDomain(domain: string, tld: string): Promise<"available" | "
 }
 
 export async function GET(request: NextRequest) {
+  const rateLimitError = await checkRateLimit(request);
+  if (rateLimitError) return rateLimitError;
+
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
 
