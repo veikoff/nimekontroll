@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { I18nProvider } from "@/lib/i18nContext";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -29,8 +30,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="et" className={inter.variable}>
-      <body className="antialiased font-sans">{children}</body>
+    <html lang="et" className={inter.variable} suppressHydrationWarning>
+      <body className="antialiased font-sans">
+        <I18nProvider>{children}</I18nProvider>
+      </body>
     </html>
   );
 }

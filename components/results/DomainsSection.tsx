@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useLang } from "@/lib/i18nContext";
 import type { DomainsResult, DomainCheck } from "@/app/api/check/domains/route";
 
 type LoadingState = "idle" | "loading" | "done";
@@ -14,21 +15,22 @@ interface Props {
 }
 
 export function DomainsSection({ state, data, error }: Props) {
+  const { t } = useLang();
   return (
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-base flex items-center gap-2">
           <span className="text-xl">🌐</span>
-          Domeenid
+          {t.domains_title}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {state === "loading" && <LoadingRow label="Kontrollin domeene..." />}
+        {state === "loading" && <LoadingRow label={t.domains_loading} />}
         {state === "done" && error && <ErrorRow message={error} />}
         {state === "done" && data && (
           <div className="space-y-3">
             {data.domains.map((d) => (
-              <DomainRow key={d.tld} domain={d} />
+              <DomainRow key={d.tld} domain={d} registerLabel={t.domain_register} t={t} />
             ))}
           </div>
         )}
@@ -37,7 +39,15 @@ export function DomainsSection({ state, data, error }: Props) {
   );
 }
 
-function DomainRow({ domain }: { domain: DomainCheck }) {
+function DomainRow({
+  domain,
+  registerLabel,
+  t,
+}: {
+  domain: DomainCheck;
+  registerLabel: string;
+  t: ReturnType<typeof useLang>["t"];
+}) {
   return (
     <div className="flex items-center gap-3">
       <StatusIcon status={domain.status} />
@@ -48,7 +58,7 @@ function DomainRow({ domain }: { domain: DomainCheck }) {
         )}
       </div>
       <div className="flex items-center gap-2 shrink-0">
-        <StatusBadge status={domain.status} />
+        <StatusBadge status={domain.status} t={t} />
         {domain.status === "available" && domain.affiliateUrl && (
           <Button
             asChild
@@ -56,7 +66,7 @@ function DomainRow({ domain }: { domain: DomainCheck }) {
             className="h-7 px-3 text-xs bg-[#065F46] hover:bg-[#047857] text-white"
           >
             <a href={domain.affiliateUrl} target="_blank" rel="noopener noreferrer">
-              Registreeri
+              {registerLabel}
             </a>
           </Button>
         )}
@@ -73,12 +83,18 @@ function StatusIcon({ status }: { status: DomainCheck["status"] }) {
   return <span className="text-gray-400 text-lg">?</span>;
 }
 
-function StatusBadge({ status }: { status: DomainCheck["status"] }) {
+function StatusBadge({
+  status,
+  t,
+}: {
+  status: DomainCheck["status"];
+  t: ReturnType<typeof useLang>["t"];
+}) {
   if (status === "available")
-    return <Badge className="bg-green-100 text-green-800 hover:bg-green-100 text-xs">VABA</Badge>;
+    return <Badge className="bg-green-100 text-green-800 hover:bg-green-100 text-xs">{t.badge_available}</Badge>;
   if (status === "taken")
-    return <Badge className="bg-red-100 text-red-800 hover:bg-red-100 text-xs">VÕETUD</Badge>;
-  return <Badge variant="secondary" className="text-xs">TEADMATA</Badge>;
+    return <Badge className="bg-red-100 text-red-800 hover:bg-red-100 text-xs">{t.badge_taken}</Badge>;
+  return <Badge variant="secondary" className="text-xs">{t.badge_unknown}</Badge>;
 }
 
 function LoadingRow({ label }: { label: string }) {

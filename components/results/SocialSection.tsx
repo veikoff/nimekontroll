@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useLang } from "@/lib/i18nContext";
 import type { SocialResult, SocialCheck } from "@/app/api/check/social/route";
 
 type LoadingState = "idle" | "loading" | "done";
@@ -20,21 +21,22 @@ const PLATFORM_ICONS: Record<string, string> = {
 };
 
 export function SocialSection({ state, data, error }: Props) {
+  const { t } = useLang();
   return (
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-base flex items-center gap-2">
           <span className="text-xl">📱</span>
-          Sotsiaalmeedia kasutajanimed
+          {t.social_title}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {state === "loading" && <LoadingRow label="Kontrollin sotsiaalmeediat..." />}
+        {state === "loading" && <LoadingRow label={t.social_loading} />}
         {state === "done" && error && <ErrorRow message={error} />}
         {state === "done" && data && (
           <div className="space-y-3">
             {data.platforms.map((p) => (
-              <PlatformRow key={p.platform} platform={p} />
+              <PlatformRow key={p.platform} platform={p} t={t} />
             ))}
           </div>
         )}
@@ -43,7 +45,13 @@ export function SocialSection({ state, data, error }: Props) {
   );
 }
 
-function PlatformRow({ platform }: { platform: SocialCheck }) {
+function PlatformRow({
+  platform,
+  t,
+}: {
+  platform: SocialCheck;
+  t: ReturnType<typeof useLang>["t"];
+}) {
   const icon = PLATFORM_ICONS[platform.platform] ?? "🔗";
   return (
     <div className="flex items-center gap-3">
@@ -61,7 +69,7 @@ function PlatformRow({ platform }: { platform: SocialCheck }) {
           {platform.handle}
         </a>
       </div>
-      <StatusBadge status={platform.status} />
+      <StatusBadge status={platform.status} t={t} />
     </div>
   );
 }
@@ -74,12 +82,18 @@ function StatusIcon({ status }: { status: SocialCheck["status"] }) {
   return <span className="text-gray-400 text-lg">?</span>;
 }
 
-function StatusBadge({ status }: { status: SocialCheck["status"] }) {
+function StatusBadge({
+  status,
+  t,
+}: {
+  status: SocialCheck["status"];
+  t: ReturnType<typeof useLang>["t"];
+}) {
   if (status === "available")
-    return <Badge className="bg-green-100 text-green-800 hover:bg-green-100 text-xs">VABA</Badge>;
+    return <Badge className="bg-green-100 text-green-800 hover:bg-green-100 text-xs">{t.badge_available}</Badge>;
   if (status === "taken")
-    return <Badge className="bg-red-100 text-red-800 hover:bg-red-100 text-xs">VÕETUD</Badge>;
-  return <Badge variant="secondary" className="text-xs">TEADMATA</Badge>;
+    return <Badge className="bg-red-100 text-red-800 hover:bg-red-100 text-xs">{t.badge_taken}</Badge>;
+  return <Badge variant="secondary" className="text-xs">{t.badge_unknown}</Badge>;
 }
 
 function LoadingRow({ label }: { label: string }) {

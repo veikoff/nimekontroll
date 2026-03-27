@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { AriregisterSection } from "@/components/results/AriregisterSection";
 import { DomainsSection } from "@/components/results/DomainsSection";
 import { SocialSection } from "@/components/results/SocialSection";
+import { useLang } from "@/lib/i18nContext";
 import type { AriregisterResult } from "@/app/api/check/ariregister/route";
 import type { DomainsResult } from "@/app/api/check/domains/route";
 import type { SocialResult } from "@/app/api/check/social/route";
@@ -19,6 +20,7 @@ interface CheckState<T> {
 }
 
 export function SearchClient() {
+  const { t } = useLang();
   const [query, setQuery] = useState("");
   const [searchedName, setSearchedName] = useState("");
   const [ariregister, setAriregister] = useState<CheckState<AriregisterResult>>({
@@ -96,7 +98,7 @@ export function SearchClient() {
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Sisesta ärinimi... (nt. TartuTech OÜ)"
+          placeholder={t.search_placeholder}
           className="flex-1 h-12 text-base px-4"
           maxLength={100}
           disabled={isChecking}
@@ -110,10 +112,10 @@ export function SearchClient() {
           {isChecking ? (
             <span className="flex items-center gap-2">
               <Spinner />
-              Kontrollin...
+              {t.search_checking}
             </span>
           ) : (
-            "Kontrolli kättesaadavust"
+            t.search_btn
           )}
         </Button>
       </form>
@@ -121,7 +123,7 @@ export function SearchClient() {
       {hasResults && (
         <div ref={resultsRef} className="mt-10 space-y-6">
           <p className="text-sm text-muted-foreground">
-            Kontrollitakse nime:{" "}
+            {t.search_checking_name}{" "}
             <span className="font-semibold text-foreground">&ldquo;{searchedName}&rdquo;</span>
           </p>
           <AriregisterSection state={ariregister.state} data={ariregister.data} error={ariregister.error} />
