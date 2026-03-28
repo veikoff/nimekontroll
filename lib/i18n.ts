@@ -44,6 +44,15 @@ export type Translations = {
   // Social section
   social_title: string;
   social_loading: string;
+  // Kaubamärgid section
+  kaubamargid_title: string;
+  kaubamargid_loading: string;
+  kaubamargid_available: string;
+  kaubamargid_taken: string;
+  kaubamargid_similar: (n: number) => string;
+  kaubamargid_check_epa: string;
+  kaubamargid_status_label: string;
+  kaubamargid_owner_label: string;
   // Status badges
   badge_available: string;
   badge_taken: string;
@@ -95,6 +104,14 @@ export const translations: Record<Lang, Translations> = {
     domain_register: "Registreeri",
     social_title: "Sotsiaalmeedia kasutajanimed",
     social_loading: "Kontrollin sotsiaalmeediat...",
+    kaubamargid_title: "Kaubamärgid (EPA)",
+    kaubamargid_loading: "Kontrollin kaubamärgiregistrit...",
+    kaubamargid_available: "Täpset kaubamärki ei leitud – nimi on registreerimiseks vaba",
+    kaubamargid_taken: "Sarnane kaubamärk on registreeritud",
+    kaubamargid_similar: (n) => `Leiti ${n} sarnast kaubamärki`,
+    kaubamargid_check_epa: "Vaata EPA registrist",
+    kaubamargid_status_label: "Staatus:",
+    kaubamargid_owner_label: "Omanik:",
     badge_available: "VABA",
     badge_taken: "VÕETUD",
     badge_unknown: "TEADMATA",
@@ -145,6 +162,14 @@ export const translations: Record<Lang, Translations> = {
     domain_register: "Register",
     social_title: "Social media usernames",
     social_loading: "Checking social media...",
+    kaubamargid_title: "Trademarks (EPA)",
+    kaubamargid_loading: "Checking trademark registry...",
+    kaubamargid_available: "No exact trademark found – name is free to register",
+    kaubamargid_taken: "A similar trademark is already registered",
+    kaubamargid_similar: (n) => `${n} similar trademark${n === 1 ? "" : "s"} found`,
+    kaubamargid_check_epa: "View in EPA registry",
+    kaubamargid_status_label: "Status:",
+    kaubamargid_owner_label: "Owner:",
     badge_available: "AVAILABLE",
     badge_taken: "TAKEN",
     badge_unknown: "UNKNOWN",

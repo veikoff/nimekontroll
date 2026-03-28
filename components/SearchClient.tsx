@@ -6,10 +6,12 @@ import { Input } from "@/components/ui/input";
 import { AriregisterSection } from "@/components/results/AriregisterSection";
 import { DomainsSection } from "@/components/results/DomainsSection";
 import { SocialSection } from "@/components/results/SocialSection";
+import { KaubamargidSection } from "@/components/results/KaubamargidSection";
 import { useLang } from "@/lib/i18nContext";
 import type { AriregisterResult } from "@/app/api/check/ariregister/route";
 import type { DomainsResult } from "@/app/api/check/domains/route";
 import type { SocialResult } from "@/app/api/check/social/route";
+import type { KaubamargidResult } from "@/app/api/check/kaubamargid/route";
 
 type LoadingState = "idle" | "loading" | "done";
 
@@ -38,10 +40,15 @@ export function SearchClient() {
     data: null,
     error: null,
   });
+  const [kaubamargid, setKaubamargid] = useState<CheckState<KaubamargidResult>>({
+    state: "idle",
+    data: null,
+    error: null,
+  });
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  const isChecking = [ariregister, domains, social].some((s) => s.state === "loading");
-  const hasResults = [ariregister, domains, social].some((s) => s.state !== "idle");
+  const isChecking = [ariregister, domains, social, kaubamargid].some((s) => s.state === "loading");
+  const hasResults = [ariregister, domains, social, kaubamargid].some((s) => s.state !== "idle");
 
   async function handleCheck(e: React.FormEvent) {
     e.preventDefault();
@@ -52,6 +59,7 @@ export function SearchClient() {
     setAriregister({ state: "loading", data: null, error: null });
     setDomains({ state: "loading", data: null, error: null });
     setSocial({ state: "loading", data: null, error: null });
+    setKaubamargid({ state: "loading", data: null, error: null });
 
     setTimeout(() => {
       resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -89,7 +97,17 @@ export function SearchClient() {
         setSocial({ state: "done", data: null, error: err.message });
       });
 
-    await Promise.allSettled([fetchAriregister, fetchDomains, fetchSocial]);
+    const fetchKaubamargid = fetch(`/api/check/kaubamargid?name=${encoded}`)
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error ?? "Viga");
+        setKaubamargid({ state: "done", data, error: null });
+      })
+      .catch((err) => {
+        setKaubamargid({ state: "done", data: null, error: err.message });
+      });
+
+    await Promise.allSettled([fetchAriregister, fetchDomains, fetchSocial, fetchKaubamargid]);
   }
 
   return (
@@ -128,6 +146,7 @@ export function SearchClient() {
           </p>
           <AriregisterSection state={ariregister.state} data={ariregister.data} error={ariregister.error} />
           <DomainsSection state={domains.state} data={domains.data} error={domains.error} />
+          <KaubamargidSection state={kaubamargid.state} data={kaubamargid.data} error={kaubamargid.error} />
           <SocialSection state={social.state} data={social.data} error={social.error} />
         </div>
       )}
