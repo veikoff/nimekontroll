@@ -6,22 +6,35 @@ import { I18nProvider } from "@/lib/i18nContext";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Nimekontroll – Eesti ärinime kättesaadavuse kontrollija",
+  title: "Nimekontroll – Ärinime kontrollija | Äriregister · Kaubamärgid · Domeenid",
   description:
-    "Kontrolli ärinime kättesaadavust korraga kõigist olulistest registritest: Eesti Äriregister, domeenid (.ee, .com, .eu, .io) ja sotsiaalmeedia. Tasuta ja kohene.",
+    "Kontrolli ärinime kättesaadavust tasuta – ühe otsinguga kontrollime Eesti äriregistrit, EPA kaubamärgiregistrit, domeene (.ee, .com, .eu, .io) ja sotsiaalmeediat. Ideaalne OÜ asutajatele, FIE-dele ja e-residentidele.",
   keywords: [
     "ärinime kontroll",
     "OÜ nimi kontroll",
     "vaba ärinimi Eesti",
+    "kaubamärgi kontroll Eesti",
+    "EPA kaubamärgiregister",
+    "domeen .ee vaba",
+    "äriregistri kontroll",
     "e-residency company name check",
     "Estonian company name availability",
+    "trademark check Estonia",
+    "Estonian business name checker",
+    "check company name Estonia",
   ],
   openGraph: {
-    title: "Nimekontroll – Eesti ärinime kättesaadavuse kontrollija",
+    title: "Nimekontroll – Ärinime kontrollija | Äriregister · Kaubamärgid · Domeenid",
     description:
-      "Kontrolli ärinime kättesaadavust korraga kõigist olulistest registritest.",
+      "Kontrolli ärinime kättesaadavust tasuta. Ühe otsinguga: äriregister, kaubamärgid (EPA), domeenid ja sotsiaalmeedia.",
     locale: "et_EE",
     type: "website",
+  },
+  alternates: {
+    languages: {
+      "et-EE": "https://nimekontroll.ee",
+      "en-US": "https://nimekontroll.ee",
+    },
   },
   robots: { index: true, follow: true },
 };

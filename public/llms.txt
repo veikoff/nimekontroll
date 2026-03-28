@@ -1,22 +1,70 @@
 # Nimekontroll.ee
 
-> Eesti ärinime kättesaadavuse kontrollija – kontrollib korraga äriregistrit, domeene ja sotsiaalmeediat.
+> Tasuta ärinime kättesaadavuse kontrollija Eestis – äriregister, kaubamärgid, domeenid, sotsiaalmeedia.
+> Free Estonian business name availability checker – business registry, trademarks, domains, social media.
 
-Nimekontroll.ee on tasuta tööriist, mis võimaldab OÜ asutajatel, FIE-del ja e-residentidel kontrollida ärinime kättesaadavust ühest kohast.
+## Mis on nimekontroll.ee? / What is nimekontroll.ee?
 
-## Funktsioonid
+Nimekontroll.ee on tasuta veebipõhine tööriist, mis kontrollib ärinime kättesaadavust korraga neljast ametlikust allikast. Tööriist on mõeldud OÜ asutajatele, FIE-dele, e-residentidele ja startup-asutajatele, kes soovivad ühest kohast kiiresti teada saada, kas nende soovitud ärinimi on kättesaadav.
 
-- **Äriregister**: Kontrollib Eesti äriregistrit (ariregister.rik.ee) – kas täpne nimi on registreeritud
-- **Domeenid**: Kontrollib .ee, .com, .eu, .io domeenide kättesaadavust RDAP protokolli kaudu
-- **Sotsiaalmeedia**: Kontrollib Facebook, Instagram, LinkedIn kasutajanimede kättesaadavust
-- **Affiliate lingid**: Vabade domeenide kõrval otselingid Zone.ee ja Namecheap registreerimiseks
+Nimekontroll.ee is a free web tool that simultaneously checks business name availability from four official sources. It is designed for OÜ founders, sole traders (FIE), e-residents and startup founders who want to quickly find out from one place whether their desired business name is available.
 
-## API
+## Kontrollitavad allikad / Sources checked
 
-- `GET /api/check/ariregister?name=NIMI` – Äriregistri kontroll
-- `GET /api/check/domains?name=NIMI` – Domeenide kontroll
-- `GET /api/check/social?name=NIMI` – Sotsiaalmeedia kontroll
+### 1. Eesti Äriregister / Estonian Business Registry
+- Allikas / Source: ariregister.rik.ee
+- Kontrollib täpset nime ja sarnaseid nimesid
+- Checks for exact name matches and similar names
+- Tagastab staatuse: vaba / võetud / sarnane / konflikt
+- Returns status: available / taken / similar / conflict
 
-## Sihtrühm
+### 2. Kaubamärgiregister (EPA) / Trademark Register (EPA)
+- Allikas / Source: andmebaas.epa.ee (Eesti Patendiamet / Estonian Patent Office)
+- Kontrollib täpset ja sarnast kaubamärki aktiivsetest registreeringutest
+- Checks for exact and similar trademarks from active registrations
+- Näitab kaubamärgi nime, staatust ja omaniku nime
+- Shows trademark name, status and owner name
 
-OÜ asutajad, FIE-d, e-residendid, startup asutajad Eestis ja väljastpoolt.
+### 3. Domeenid / Domains
+- Kontrollitavad laiendid / Extensions checked: .ee, .com, .eu, .io
+- Näitab hinda ja otselinki registreerimiseks (Zone.ee, Namecheap)
+- Shows price and direct registration link (Zone.ee, Namecheap)
+
+### 4. Sotsiaalmeedia / Social Media
+- Platvormid / Platforms: Facebook, Instagram, LinkedIn
+- Kontrollib kasutajanime kättesaadavust
+- Checks username availability
+
+## API endpointid / API Endpoints
+
+- `GET /api/check/ariregister?name=NIMI` – Äriregistri kontroll / Business registry check
+- `GET /api/check/kaubamargid?name=NIMI` – Kaubamärgiregistri kontroll / Trademark check
+- `GET /api/check/domains?name=NIMI` – Domeenide kontroll / Domain check
+- `GET /api/check/social?name=NIMI` – Sotsiaalmeedia kontroll / Social media check
+
+Kõik endpointid tagastavad JSON. Rate limit: 10 päringut minutis per IP.
+All endpoints return JSON. Rate limit: 10 requests per minute per IP.
+
+## Sihtrühm / Target audience
+
+- OÜ ja AS asutajad Eestis / OÜ and AS founders in Estonia
+- FIE-d / Sole traders (FIE)
+- E-residendid / E-residents
+- Startup-asutajad / Startup founders
+- Ettevõtlusnõustajad / Business consultants
+
+## Tehniline stack / Tech stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Vercel (hosting)
+- Upstash Redis (rate limiting)
+
+## Lingid / Links
+
+- Eesti äriregister: https://ariregister.rik.ee
+- EPA kaubamärgiregister: https://andmebaas.epa.ee/avalik/#/trademarks
+- Zone.ee domeenid: https://www.zone.ee
+- Namecheap domeenid: https://www.namecheap.com
+- E-residentsus: https://e-resident.gov.ee
