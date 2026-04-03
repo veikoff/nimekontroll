@@ -18,7 +18,7 @@ const FAQ_ET = [
     a: "Kõik neli kontrolli käivituvad paralleelselt ja tulemused ilmuvad reaalajas – tavaliselt 2–5 sekundi jooksul.",
   },
   {
-    q: "Kas nimekontroll.ee sobib e-residentidele?",
+    q: "Kas nimekontroll.eu sobib e-residentidele?",
     a: "Jah. Leht on saadaval nii eesti kui inglise keeles ja sobib ideaalselt e-residentidele, kes soovivad Eestis ettevõtet asutada.",
   },
   {
@@ -29,8 +29,8 @@ const FAQ_ET = [
 
 const FAQ_EN = [
   {
-    q: "What is Nimekontroll?",
-    a: "Nimekontroll is a free tool that checks business name availability from four sources simultaneously: the Estonian Business Registry, EPA trademark register, domain registries (.ee, .com, .eu, .io) and social media (Facebook, Instagram, LinkedIn).",
+    q: "What is Namechecker?",
+    a: "Namechecker is a free tool that checks business name availability from four sources simultaneously: the Estonian Business Registry, EPA trademark register, domain registries (.ee, .com, .eu, .io) and social media (Facebook, Instagram, LinkedIn).",
   },
   {
     q: "Is it free to use?",
@@ -41,7 +41,7 @@ const FAQ_EN = [
     a: "All four checks run in parallel and results appear in real time – typically within 2–5 seconds.",
   },
   {
-    q: "Is nimekontroll.ee suitable for e-residents?",
+    q: "Is nimekontroll.eu suitable for e-residents?",
     a: "Yes. The site is available in both Estonian and English and is ideal for e-residents looking to set up a company in Estonia.",
   },
   {
