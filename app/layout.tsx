@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     },
   },
   robots: { index: true, follow: true },
+  other: {
+    "Impact-Site-Verification": "1769d722-e977-4e3c-ad5f-8e1850d14906",
+  },
 };
 
 export default function RootLayout({
