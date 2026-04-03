@@ -6,8 +6,8 @@ import { useLang } from "@/lib/i18nContext";
 
 const FAQ_ET = [
   {
-    q: "Mis on nimekontroll.ee?",
-    a: "Nimekontroll.ee on tasuta tööriist, mis kontrollib ärinime kättesaadavust korraga neljast allikast: Eesti äriregistrist, EPA kaubamärgiregistrist, domeeniregistritest (.ee, .com, .eu, .io) ja sotsiaalmeediast (Facebook, Instagram, LinkedIn).",
+    q: "Mis on Nimekontroll?",
+    a: "Nimekontroll on tasuta tööriist, mis kontrollib ärinime kättesaadavust korraga neljast allikast: Eesti äriregistrist, EPA kaubamärgiregistrist, domeeniregistritest (.ee, .com, .eu, .io) ja sotsiaalmeediast (Facebook, Instagram, LinkedIn).",
   },
   {
     q: "Kas kontroll on tasuta?",
@@ -29,8 +29,8 @@ const FAQ_ET = [
 
 const FAQ_EN = [
   {
-    q: "What is nimekontroll.ee?",
-    a: "Nimekontroll.ee is a free tool that checks business name availability from four sources simultaneously: the Estonian Business Registry, EPA trademark register, domain registries (.ee, .com, .eu, .io) and social media (Facebook, Instagram, LinkedIn).",
+    q: "What is Nimekontroll?",
+    a: "Nimekontroll is a free tool that checks business name availability from four sources simultaneously: the Estonian Business Registry, EPA trademark register, domain registries (.ee, .com, .eu, .io) and social media (Facebook, Instagram, LinkedIn).",
   },
   {
     q: "Is it free to use?",
