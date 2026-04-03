@@ -371,13 +371,12 @@ export default function EResidentPage() {
           <p className="text-white/80 mb-6 max-w-md mx-auto">
             It takes 5 seconds. No signup, no cost. Check the Business Registry, trademarks, domains and social media in one go.
           </p>
-          <a
-            href="#"
-            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          <Link
+            href="/e-resident"
             className="inline-block bg-white text-[#065F46] font-semibold px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors"
           >
             Check name availability ↑
-          </a>
+          </Link>
         </section>
 
       </main>
