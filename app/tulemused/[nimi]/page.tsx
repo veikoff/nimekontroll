@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { use } from "react";
 import { SearchClient } from "@/components/SearchClient";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLang } from "@/lib/i18nContext";
@@ -9,10 +8,9 @@ import { useLang } from "@/lib/i18nContext";
 export default function TulemustedPage({
   params,
 }: {
-  params: Promise<{ nimi: string }>;
+  params: { nimi: string };
 }) {
-  const { nimi } = use(params);
-  const name = decodeURIComponent(nimi);
+  const name = decodeURIComponent(params.nimi);
   const { t } = useLang();
 
   return (
