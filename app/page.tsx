@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { SearchClient } from "@/components/SearchClient";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLang } from "@/lib/i18nContext";
@@ -83,6 +84,12 @@ export default function Home() {
             <span className="text-xs text-muted-foreground hidden sm:block">
               {t.tagline}
             </span>
+            <Link
+              href="/e-resident"
+              className="text-xs font-medium text-[#065F46] border border-[#065F46] px-2.5 py-1 rounded hover:bg-[#065F46] hover:text-white transition-colors hidden sm:block"
+            >
+              For e-residents →
+            </Link>
             <LanguageSwitcher />
           </div>
         </div>
