@@ -185,6 +185,12 @@ export default function Home() {
           <p className="text-xs text-muted-foreground/70 mt-1">
             {t.footer_disclaimer}
           </p>
+          <Link
+            href="/kuidas-toimib"
+            className="text-xs text-muted-foreground/50 hover:text-[#065F46] transition-colors"
+          >
+            Kuidas toimib?
+          </Link>
         </div>
       </footer>
     </div>
