@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AriregisterSection } from "@/components/results/AriregisterSection";
@@ -21,10 +21,15 @@ interface CheckState<T> {
   error: string | null;
 }
 
-export function SearchClient() {
+interface Props {
+  initialName?: string;
+}
+
+export function SearchClient({ initialName }: Props) {
   const { t } = useLang();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialName ?? "");
   const [searchedName, setSearchedName] = useState("");
+  const [copied, setCopied] = useState(false);
   const [ariregister, setAriregister] = useState<CheckState<AriregisterResult>>({
     state: "idle",
     data: null,
@@ -49,12 +54,9 @@ export function SearchClient() {
 
   const isChecking = [ariregister, domains, social, kaubamargid].some((s) => s.state === "loading");
   const hasResults = [ariregister, domains, social, kaubamargid].some((s) => s.state !== "idle");
+  const allDone = [ariregister, domains, social, kaubamargid].every((s) => s.state === "done");
 
-  async function handleCheck(e: React.FormEvent) {
-    e.preventDefault();
-    const name = query.trim();
-    if (!name || name.length < 2) return;
-
+  async function runSearch(name: string) {
     setSearchedName(name);
     setAriregister({ state: "loading", data: null, error: null });
     setDomains({ state: "loading", data: null, error: null });
@@ -67,47 +69,62 @@ export function SearchClient() {
 
     const encoded = encodeURIComponent(name);
 
-    const fetchAriregister = fetch(`/api/check/ariregister?name=${encoded}`)
-      .then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? "Viga");
-        setAriregister({ state: "done", data, error: null });
-      })
-      .catch((err) => {
-        setAriregister({ state: "done", data: null, error: err.message });
-      });
+    await Promise.allSettled([
+      fetch(`/api/check/ariregister?name=${encoded}`)
+        .then(async (res) => {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error ?? "Viga");
+          setAriregister({ state: "done", data, error: null });
+        })
+        .catch((err) => setAriregister({ state: "done", data: null, error: err.message })),
 
-    const fetchDomains = fetch(`/api/check/domains?name=${encoded}`)
-      .then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? "Viga");
-        setDomains({ state: "done", data, error: null });
-      })
-      .catch((err) => {
-        setDomains({ state: "done", data: null, error: err.message });
-      });
+      fetch(`/api/check/domains?name=${encoded}`)
+        .then(async (res) => {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error ?? "Viga");
+          setDomains({ state: "done", data, error: null });
+        })
+        .catch((err) => setDomains({ state: "done", data: null, error: err.message })),
 
-    const fetchSocial = fetch(`/api/check/social?name=${encoded}`)
-      .then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? "Viga");
-        setSocial({ state: "done", data, error: null });
-      })
-      .catch((err) => {
-        setSocial({ state: "done", data: null, error: err.message });
-      });
+      fetch(`/api/check/social?name=${encoded}`)
+        .then(async (res) => {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error ?? "Viga");
+          setSocial({ state: "done", data, error: null });
+        })
+        .catch((err) => setSocial({ state: "done", data: null, error: err.message })),
 
-    const fetchKaubamargid = fetch(`/api/check/kaubamargid?name=${encoded}`)
-      .then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? "Viga");
-        setKaubamargid({ state: "done", data, error: null });
-      })
-      .catch((err) => {
-        setKaubamargid({ state: "done", data: null, error: err.message });
-      });
+      fetch(`/api/check/kaubamargid?name=${encoded}`)
+        .then(async (res) => {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error ?? "Viga");
+          setKaubamargid({ state: "done", data, error: null });
+        })
+        .catch((err) => setKaubamargid({ state: "done", data: null, error: err.message })),
+    ]);
+  }
 
-    await Promise.allSettled([fetchAriregister, fetchDomains, fetchSocial, fetchKaubamargid]);
+  async function handleCheck(e: React.FormEvent) {
+    e.preventDefault();
+    const name = query.trim();
+    if (!name || name.length < 2) return;
+    await runSearch(name);
+  }
+
+  // Auto-käivitab otsingu kui initialName on antud (shareable URL)
+  useEffect(() => {
+    if (initialName && initialName.trim().length >= 2) {
+      runSearch(initialName.trim());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleShare() {
+    const url = `${window.location.origin}/tulemused/${encodeURIComponent(searchedName)}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    });
   }
 
   return (
@@ -120,7 +137,7 @@ export function SearchClient() {
           className="flex-1 h-12 text-base px-4"
           maxLength={100}
           disabled={isChecking}
-          autoFocus
+          autoFocus={!initialName}
         />
         <Button
           type="submit"
@@ -140,10 +157,22 @@ export function SearchClient() {
 
       {hasResults && (
         <div ref={resultsRef} className="mt-10 space-y-6">
-          <p className="text-sm text-muted-foreground">
-            {t.search_checking_name}{" "}
-            <span className="font-semibold text-foreground">&ldquo;{searchedName}&rdquo;</span>
-          </p>
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <p className="text-sm text-muted-foreground">
+              {t.search_checking_name}{" "}
+              <span className="font-semibold text-foreground">&ldquo;{searchedName}&rdquo;</span>
+            </p>
+            {allDone && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleShare}
+                className="h-8 px-3 text-xs border-[#065F46] text-[#065F46] hover:bg-[#065F46] hover:text-white"
+              >
+                {copied ? t.search_share_copied : t.search_share_btn}
+              </Button>
+            )}
+          </div>
           <AriregisterSection state={ariregister.state} data={ariregister.data} error={ariregister.error} />
           <DomainsSection state={domains.state} data={domains.data} error={domains.error} />
           <KaubamargidSection state={kaubamargid.state} data={kaubamargid.data} error={kaubamargid.error} />
@@ -162,19 +191,8 @@ function Spinner() {
       fill="none"
       viewBox="0 0 24 24"
     >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-      />
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
     </svg>
   );
 }

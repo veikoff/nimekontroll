@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const BASE_URL = "https://nimekontroll.ee";
+const BASE_URL = "https://nimekontroll.eu";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

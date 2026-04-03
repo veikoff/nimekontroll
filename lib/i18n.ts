@@ -30,6 +30,9 @@ export type Translations = {
   search_checking: string;
   search_btn: string;
   search_checking_name: string;
+  search_share_btn: string;
+  search_share_copied: string;
+  search_new_btn: string;
   // Ariregister section
   ariregister_title: string;
   ariregister_loading: string;
@@ -86,7 +89,7 @@ export const translations: Record<Lang, Translations> = {
 
     how_title: "Kuidas see töötab?",
     how_p1:
-      "Nimekontroll.ee on tasuta tööriist OÜ asutajatele, FIE-dele, e-residentidele ja startup-asutajatele, kes soovivad ühest kohast kiiresti kontrollida, kas nende soovitud ärinimi on kättesaadav. Sisesta ärinimi ja me kontrollime korraga nelja allikat: Eesti äriregistrit (ariregister.rik.ee), Eesti Patendiameti kaubamärgiregistrit (EPA), domeene (.ee, .com, .eu, .io) ning populaarseid sotsiaalmeedia platvorme (Facebook, Instagram, LinkedIn).",
+      "Nimekontroll on tasuta tööriist OÜ asutajatele, FIE-dele, e-residentidele ja startup-asutajatele, kes soovivad ühest kohast kiiresti kontrollida, kas nende soovitud ärinimi on kättesaadav. Sisesta ärinimi ja me kontrollime korraga nelja allikat: Eesti äriregistrit (ariregister.rik.ee), Eesti Patendiameti kaubamärgiregistrit (EPA), domeene (.ee, .com, .eu, .io) ning populaarseid sotsiaalmeedia platvorme (Facebook, Instagram, LinkedIn).",
     how_p2_prefix: "Kõik neli kontrolli toimuvad ",
     how_p2_bold: "paralleelselt",
     how_p2_suffix:
@@ -101,6 +104,9 @@ export const translations: Record<Lang, Translations> = {
     search_checking: "Kontrollin...",
     search_btn: "Kontrolli kättesaadavust",
     search_checking_name: "Kontrollitakse nime:",
+    search_share_btn: "Jaga tulemusi",
+    search_share_copied: "Link kopeeritud!",
+    search_new_btn: "Kontrolli uut nime",
 
     ariregister_title: "Eesti Äriregister",
     ariregister_loading: "Kontrollin äriregistrit...",
@@ -159,7 +165,7 @@ export const translations: Record<Lang, Translations> = {
 
     how_title: "How does it work?",
     how_p1:
-      "Nimekontroll.ee is a free tool for OÜ founders, sole traders (FIE), e-residents and startup founders who want to quickly check from one place whether their desired business name is available. Enter a name and we simultaneously check four sources: the Estonian Business Registry (ariregister.rik.ee), the Estonian Patent Office (EPA) trademark register, domains (.ee, .com, .eu, .io) and popular social media platforms (Facebook, Instagram, LinkedIn).",
+      "Nimekontroll is a free tool for OÜ founders, sole traders (FIE), e-residents and startup founders who want to quickly check from one place whether their desired business name is available. Enter a name and we simultaneously check four sources: the Estonian Business Registry (ariregister.rik.ee), the Estonian Patent Office (EPA) trademark register, domains (.ee, .com, .eu, .io) and popular social media platforms (Facebook, Instagram, LinkedIn).",
     how_p2_prefix: "All four checks run ",
     how_p2_bold: "in parallel",
     how_p2_suffix:
@@ -174,6 +180,9 @@ export const translations: Record<Lang, Translations> = {
     search_checking: "Checking...",
     search_btn: "Check availability",
     search_checking_name: "Checking name:",
+    search_share_btn: "Share results",
+    search_share_copied: "Link copied!",
+    search_new_btn: "Check another name",
 
     ariregister_title: "Estonian Business Registry",
     ariregister_loading: "Checking business registry...",

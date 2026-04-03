@@ -32,8 +32,8 @@ export const metadata: Metadata = {
   },
   alternates: {
     languages: {
-      "et-EE": "https://nimekontroll.ee",
-      "en-US": "https://nimekontroll.ee",
+      "et-EE": "https://nimekontroll.eu",
+      "en-US": "https://nimekontroll.eu",
     },
   },
   robots: { index: true, follow: true },
