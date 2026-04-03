@@ -47,11 +47,8 @@ function getAffiliateUrl(domain: string, tld: string): string {
 // Namecheap: .com ~$9.98/a (esimene aasta), .io ~$34.98/a
 function getPrice(tld: string): string {
   const prices: Record<string, string> = {
-    ".ee": "al. €9.60/a",   // Zone.ee tavahin; kampaaniad võivad olla odavamad
-    ".eu": "€6.00/a",       // Zone.ee kinnitatud hind
-    ".com": "~$9.98/a",     // Namecheap (esimene aasta)
-    ".io": "~$34.98/a",     // Namecheap
-    ".co": "~$9.98/a",      // Namecheap
+    ".ee": "al. €9.60/a",
+    ".eu": "€6.00/a",
   };
   return prices[tld] ?? "";
 }
