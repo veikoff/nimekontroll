@@ -81,9 +81,6 @@ export default function Home() {
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-muted-foreground hidden sm:block">
-              {t.tagline}
-            </span>
             <Link
               href="/e-resident"
               className="text-xs font-medium text-[#065F46] border border-[#065F46] px-2.5 py-1 rounded hover:bg-[#065F46] hover:text-white transition-colors hidden sm:block"
