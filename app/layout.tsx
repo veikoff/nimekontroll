@@ -38,7 +38,10 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   other: {
-    "Impact-Site-Verification": "30e15e93-45a1-4ceb-99e0-acd2c3480f12",
+    "Impact-Site-Verification": [
+      "1769d722-e977-4e3c-ad5f-8e1850d14906",
+      "30e15e93-45a1-4ceb-99e0-acd2c3480f12",
+    ],
   },
 };
 
