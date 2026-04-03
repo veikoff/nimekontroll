@@ -25,6 +25,7 @@ function sanitizeName(name: string): string {
 }
 
 const ZONE_AFFILIATE = process.env.ZONE_AFFILIATE_ID ?? "";
+const NAMECHEAP_AFFILIATE_URL = process.env.NAMECHEAP_AFFILIATE_URL ?? "";
 
 function getAffiliateUrl(domain: string, tld: string): string {
   if (tld === ".ee" || tld === ".eu") {
@@ -32,7 +33,10 @@ function getAffiliateUrl(domain: string, tld: string): string {
     return ZONE_AFFILIATE ? `${base}&ref=${ZONE_AFFILIATE}` : base;
   }
   if (tld === ".com" || tld === ".io" || tld === ".co") {
-    return `https://www.namecheap.com/domains/registration/results/?domain=${encodeURIComponent(domain)}`;
+    const destination = `https://www.namecheap.com/domains/registration/results/?domain=${encodeURIComponent(domain)}`;
+    return NAMECHEAP_AFFILIATE_URL
+      ? `${NAMECHEAP_AFFILIATE_URL}?u=${encodeURIComponent(destination)}`
+      : destination;
   }
   return `https://www.zone.ee/et/domeenid/?domain=${encodeURIComponent(domain)}`;
 }
