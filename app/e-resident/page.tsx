@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 import { SearchClient } from "@/components/SearchClient";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
@@ -108,12 +109,7 @@ export default function EResidentPage() {
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-[#065F46] font-bold text-lg">nime</span>
-            <span className="bg-[#065F46] text-white font-bold text-lg px-1.5 py-0.5 rounded">
-              kontroll
-            </span>
-          </Link>
+          <Logo href="/" />
           <div className="flex items-center gap-3">
             <span className="text-xs text-muted-foreground hidden sm:block">
               Estonian company name checker for e-residents
