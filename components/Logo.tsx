@@ -14,9 +14,8 @@ export function Logo({ href = "/", size = "md" }: LogoProps) {
       <span className={`${iconSize} bg-[#065F46] text-white rounded-md flex items-center justify-center font-bold shrink-0`}>
         ✓
       </span>
-      <span className={`${textSize} font-bold tracking-tight`}>
-        <span className="text-[#065F46]">nime</span>
-        <span className="bg-[#065F46] text-white px-1 py-0.5 rounded-sm">kontroll</span>
+      <span className={`${textSize} font-bold tracking-tight bg-[#065F46] text-white px-2 py-0.5 rounded-md`}>
+        <span className="opacity-60">nime</span>{"kontroll"}
       </span>
     </span>
   );
