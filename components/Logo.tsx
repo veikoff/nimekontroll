@@ -12,7 +12,7 @@ export function Logo({ href = "/", size = "md" }: LogoProps) {
   const content = (
     <span className="flex items-center gap-1.5">
       <span className={`${textSize} font-bold tracking-tight bg-[#065F46] text-white px-2 py-0.5 rounded-md`}>
-        nimekontroll
+        Nimekontroll
       </span>
       <span className={`${iconSize} bg-[#065F46] text-white rounded-md flex items-center justify-center font-bold shrink-0`}>
         ✓
