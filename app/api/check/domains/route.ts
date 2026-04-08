@@ -41,7 +41,7 @@ function getAffiliateUrl(domain: string, tld: string): string {
 }
 
 // Hinnad Zone.ee (.ee, .eu) ja Namecheap (.com, .io) hinnakirjast
-function getPrice(_tld: string): string {
+function getPrice(): string {
   return "";
 }
 
@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
         tld,
         domain,
         available: status === "available" ? true : status === "taken" ? false : null,
-        price: getPrice(tld),
+        price: getPrice(),
         affiliateUrl: status === "available" ? getAffiliateUrl(domain, tld) : undefined,
         status,
       };
