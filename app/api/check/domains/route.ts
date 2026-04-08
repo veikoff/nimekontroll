@@ -24,13 +24,12 @@ function sanitizeName(name: string): string {
     .slice(0, 63);
 }
 
-const ZONE_AFFILIATE = process.env.ZONE_AFFILIATE_ID ?? "";
+const ZONE_CAMPAIGN = process.env.ZONE_AFFILIATE_ID ?? "RIMIGEN";
 const NAMECHEAP_AFFILIATE_URL = process.env.NAMECHEAP_AFFILIATE_URL ?? "";
 
 function getAffiliateUrl(domain: string, tld: string): string {
   if (tld === ".ee" || tld === ".eu") {
-    const base = `https://www.zone.ee/et/domeenid/?domain=${encodeURIComponent(domain)}`;
-    return ZONE_AFFILIATE ? `${base}&ref=${ZONE_AFFILIATE}` : base;
+    return `https://my.zone.eu/et/domeeni-otsing#/?campaign=${ZONE_CAMPAIGN}&domain=${encodeURIComponent(domain)}`;
   }
   if (tld === ".com" || tld === ".io" || tld === ".co") {
     const destination = `https://www.namecheap.com/domains/registration/results/?domain=${encodeURIComponent(domain)}`;
@@ -38,7 +37,7 @@ function getAffiliateUrl(domain: string, tld: string): string {
       ? `${NAMECHEAP_AFFILIATE_URL}?u=${encodeURIComponent(destination)}`
       : destination;
   }
-  return `https://www.zone.ee/et/domeenid/?domain=${encodeURIComponent(domain)}`;
+  return `https://my.zone.eu/et/domeeni-otsing#/?campaign=${ZONE_CAMPAIGN}&domain=${encodeURIComponent(domain)}`;
 }
 
 // Hinnad Zone.ee (.ee, .eu) ja Namecheap (.com, .io) hinnakirjast
