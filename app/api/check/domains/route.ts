@@ -41,13 +41,11 @@ function getAffiliateUrl(domain: string, tld: string): string {
 }
 
 // Hinnad Zone.ee (.ee, .eu) ja Namecheap (.com, .io) hinnakirjast
-// Zone.ee: .eu €6.00/a, .com €12.46/a (kinnitatud zone.ee lehelt 2025)
-// Zone.ee .ee hind: €9.60/a (tavahin), kampaania hind võib olla madalam
 // Namecheap: .com ~$9.98/a (esimene aasta), .io ~$34.98/a
 function getPrice(tld: string): string {
   const prices: Record<string, string> = {
-    ".ee": "al. €9.60/a",
-    ".eu": "€6.00/a",
+    ".com": "al. $9.98/a",
+    ".io": "al. $34.98/a",
   };
   return prices[tld] ?? "";
 }
