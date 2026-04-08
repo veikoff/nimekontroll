@@ -41,13 +41,8 @@ function getAffiliateUrl(domain: string, tld: string): string {
 }
 
 // Hinnad Zone.ee (.ee, .eu) ja Namecheap (.com, .io) hinnakirjast
-// Namecheap: .com ~$9.98/a (esimene aasta), .io ~$34.98/a
-function getPrice(tld: string): string {
-  const prices: Record<string, string> = {
-    ".com": "al. $9.98/a",
-    ".io": "al. $34.98/a",
-  };
-  return prices[tld] ?? "";
+function getPrice(_tld: string): string {
+  return "";
 }
 
 // Cloudflare DNS over HTTPS – töötab kõigi TLD-de jaoks
