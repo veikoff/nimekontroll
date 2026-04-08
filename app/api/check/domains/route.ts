@@ -29,7 +29,7 @@ const NAMECHEAP_AFFILIATE_URL = process.env.NAMECHEAP_AFFILIATE_URL ?? "";
 
 function getAffiliateUrl(domain: string, tld: string): string {
   if (tld === ".ee" || tld === ".eu") {
-    return `https://my.zone.eu/et/domeeni-otsing#/?campaign=${ZONE_CAMPAIGN}&domain=${encodeURIComponent(domain)}`;
+    return `https://my.zone.eu/et/domeeni-otsing?domain=${encodeURIComponent(domain)}#/?campaign=${ZONE_CAMPAIGN}`;
   }
   if (tld === ".com" || tld === ".io" || tld === ".co") {
     const destination = `https://www.namecheap.com/domains/registration/results/?domain=${encodeURIComponent(domain)}`;
@@ -37,7 +37,7 @@ function getAffiliateUrl(domain: string, tld: string): string {
       ? `${NAMECHEAP_AFFILIATE_URL}?u=${encodeURIComponent(destination)}`
       : destination;
   }
-  return `https://my.zone.eu/et/domeeni-otsing#/?campaign=${ZONE_CAMPAIGN}&domain=${encodeURIComponent(domain)}`;
+  return `https://my.zone.eu/et/domeeni-otsing?domain=${encodeURIComponent(domain)}#/?campaign=${ZONE_CAMPAIGN}`;
 }
 
 // Hinnad Zone.ee (.ee, .eu) ja Namecheap (.com, .io) hinnakirjast
